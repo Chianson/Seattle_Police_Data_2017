@@ -12,20 +12,28 @@ library(tidyr)
 # write.csv(seattle.data.2017, file = "Seattle_Police_911_Incident_Response_2017.csv", row.names = FALSE)
 
 #Read in 2017 data
-seattle.data <- read.csv("D:/info362/Seattle_Police_Data_2017/data/Seattle_Police_911_Incident_Response_2017.csv",
-                         stringsAsFactors = FALSE)
+seattle.data <- read.csv("data/Seattle_Police_911_Incident_Response_2017.csv")
 
-#Unique categories reported during incident calls
-descript.cat <- unique(seattle.data$Event.Clearance.Description)
-clearance.subg.cat <- unique(seattle.data$Event.Clearance.SubGroup)
-clearance.group.cat <- unique(seattle.data$Event.Clearance.Group)
+#Date data was downloaded
+date.downloaded <- as.Date("01-19-2018", format = "%d-%M-%Y")
 
 #Split clearance date column into "Date" and "Time"
 seattle.data <- separate(seattle.data,
                          col = "Event.Clearance.Date",
                          into = c("Date", "Time"),
                          sep = " ",
-                         extra = "merge")
+                         extra = "merge") #merges time + am or pm, e.g. 6:00 pm
+
 #Only retain the hour of each inccident call (24 hour format)
 seattle.data$Time <- strptime(seattle.data$Time, "%I:%M:%S %p") %>%
                      format("%H")
+seattle.data$day <- weekdays(as.Date(seattle.data$Date, format = "%d/%M/%Y"))
+
+getFreqDf <- function(column){
+  
+}
+#Unique categories reported during incident calls are placed into tables
+descript.cat <- as.data.frame(table(seattle.data$Event.Clearance.Description))
+names(descript.cat) <- c("description", "Freq")
+clearance.subg.cat <- table(seattle.data$Event.Clearance.SubGroup)
+clearance.group.cat <- table(seattle.data$Event.Clearance.Group)
