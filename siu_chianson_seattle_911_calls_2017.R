@@ -1,6 +1,6 @@
 library(dplyr)
 library(tidyr)
-
+library(ggplot2)
 # Get and filter for 2017 data
 # seattle.data <- read.csv("D:/info362/Seattle_Police_Data_2017/data/Seattle_Police_Department_911_Incident_Response.csv",
 #                          stringsAsFactors = FALSE)
@@ -37,3 +37,7 @@ descript.cat <- as.data.frame(table(seattle.data$Event.Clearance.Description))
 names(descript.cat) <- c("description", "Freq")
 clearance.subg.cat <- table(seattle.data$Event.Clearance.SubGroup)
 clearance.group.cat <- table(seattle.data$Event.Clearance.Group)
+
+# crimes by day
+crimes.by.day <- as.data.frame(table(seattle.data$day))
+names(crimes.by.day) <- c("Day", "Freq")
