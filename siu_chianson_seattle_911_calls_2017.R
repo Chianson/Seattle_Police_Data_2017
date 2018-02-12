@@ -1,3 +1,6 @@
+# install.packages('dplyr')
+# install.packages('tidyr')
+# install.packages('ggplot2')
 library(dplyr)
 library(tidyr)
 library(ggplot2)
